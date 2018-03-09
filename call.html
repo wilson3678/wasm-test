@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<body>
+        
+
+<script async type="text/javascript" src="call.js"></script>
+ 
+<script>
+    setTimeout(() => {
+        init();
+    }, 1000);
+
+ 
+ function init(){
+		var result = Module.ccall(
+        'set_parameter', // name of C function
+        'number' // return type
+		); // arguments
+        setTimeout(() => {
+            get_test();
+        }, 1000);
+		
+        		
+		WebAssembly_func=Module.cwrap('WebAssembly_func',  'number',['string'], ['number']);
+		
+		console.log( math_process("double_fuc",[2]) );
+	}
+  function write_1d_int32_array(ptr,array) {
+ 	for(i=0;i<array.length;i++) {
+	  Module.setValue(ptr,array[i],'i32');
+	  ptr += 4;
+	}
+   
+  }
+  function math_process(name,array) {
+		  var result;
+		  
+		//var myarray = [10,20,30,40,50];
+		if(array!=null){
+			var arrayptr = Module._malloc(array.length*4);
+			write_1d_int32_array(arrayptr,array);
+			
+			result=WebAssembly_func(name,arrayptr,array.length);
+			Module._free(arrayptr);
+		}
+		else
+			result=WebAssembly_func(name);
+		return result;
+  }
+  function get_test(){
+        var getvalue = Module.cwrap('getvalue', 'number', ['string']); // argument types
+		
+		console.log(getvalue("value1"));
+		
+		var getsrting = Module.cwrap('getsrting', 'string', ['string']); // argument types
+		console.log(getsrting("string1"));
+
+  }
+</script>
+</body>
+</html>
