@@ -22,8 +22,8 @@
 		
         		
 		WebAssembly_func=Module.cwrap('WebAssembly_func',  'number',['string'], ['number']);
-		
-		console.log( math_process("double_fuc",[2]) );
+		document.write("math process with double:"+math_process("double_fuc",[2])+'<br>');
+		//console.log(  );
 	}
   function write_1d_int32_array(ptr,array) {
  	for(i=0;i<array.length;i++) {
@@ -49,11 +49,12 @@
   }
   function get_test(){
         var getvalue = Module.cwrap('getvalue', 'number', ['string']); // argument types
-		
-		console.log(getvalue("value1"));
+		document.write("get value:"+getvalue("value1")+'<br>');
+		//console.log(getvalue("value1"));
 		
 		var getsrting = Module.cwrap('getsrting', 'string', ['string']); // argument types
-		console.log(getsrting("string1"));
+		document.write("get string:"+getsrting("string1")+'<br>');
+		//console.log(getsrting("string1"));
 
   }
 </script>
